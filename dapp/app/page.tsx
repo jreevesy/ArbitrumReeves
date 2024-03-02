@@ -153,7 +153,7 @@ return (
     value = {stakingAmount}
     onChange = {(e) => stakeAmountChange(e)}
     style={{color:"Black"}}
-    placeholder="Amount of Stake  Tokens"
+    placeholder="Amount of Stake Tokens"
     
   />
  
