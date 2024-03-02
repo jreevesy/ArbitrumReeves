@@ -113,6 +113,9 @@ return (
     textAlign: 'center',
     background: 'transparent'
   }}>
+    <form>
+    <label> Contract Id: 0x63CdD3987B09917A140a8C4597029419f3Ff7Bc5</label><br></br>
+    </form>
           <button onClick={() => {connectWallet();}}
         className="p-3 bg-violet-900 text-black rounded transition duration-300 hover:ring-4 hover:ring-violet-700"
       >
