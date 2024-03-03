@@ -89,29 +89,31 @@ export default function Home() {
     }
   };
 
-  const renderForm = (labelText, value, onChange, onClick) => (
-    <div style={formContainerStyle}>
-      <form>
-        {/* <label>{labelText}</label><br /> Remove this line */}
-      </form>
+  function renderForm(labelText: string, value: number | undefined, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void, onClick: () => void) {
+    return (
+      <div style={formContainerStyle}>
+        <form>
+          {/* <label>{labelText}</label><br /> Remove this line */}
+        </form>
 
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e)}
-        style={{ color: "black" }}
-        placeholder={` ${labelText}`}
-      />
-      
-      <button
-        onClick={onClick}
-        className="p-3 bg-violet-900 text-black transition duration-300 hover:ring-4 hover:ring-violet-700"
-        style={{ borderRadius: '0', marginTop: '10px' }}
-      >
-        {labelText}
-      </button>
-    </div>
-  );
+        <input
+          type="text"
+          value={value !== undefined ? value : ""}
+          onChange={(e) => onChange(e)}
+          style={{ color: "black" }}
+          placeholder={` ${labelText}`}
+        />
+        
+        <button
+          onClick={onClick}
+          className="p-3 bg-violet-900 text-black transition duration-300 hover:ring-4 hover:ring-violet-700"
+          style={{ borderRadius: '0', marginTop: '10px' }}
+        >
+          {labelText}
+        </button>
+      </div>
+    );
+  }
 
   const mainStyle: React.CSSProperties = {
     display: 'flex',
@@ -124,19 +126,19 @@ export default function Home() {
     backgroundPosition: 'center',
   };
 
-  const containerStyle = {
+  const containerStyle: React.CSSProperties = {
     border: '2px solid rgba(255, 255, 255, 0.2)',
     backdropFilter: 'blur(20px)',
     boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
     padding: '80px',
     margin: '20px',
-    textAlign: 'center',
+    textAlign: 'center' as 'center', // Explicitly define the type as 'center'
     background: 'transparent',
   };
 
-  const formContainerStyle = {
+  const formContainerStyle: React.CSSProperties = {
     display: 'flex',
-    flexDirection: 'column' as 'column', // Explicitly define the type as 'column'
+    flexDirection: 'column',
     alignItems: 'center',
     margin: '20px',
   };
