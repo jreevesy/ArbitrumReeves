@@ -89,40 +89,7 @@ export default function Home() {
     }
   };
 
-  return (
-    <main style={mainStyle}>
-      <div style={containerStyle}>
-        <form>
-          <label> Contract Id: 0x63CdD3987B09917A140a8C4597029419f3Ff7Bc5</label><br />
-        </form>
-
-        <button
-        onClick={connectWallet}
-        className="p-3 bg-violet-900 text-black transition duration-300 hover:ring-4 hover:ring-violet-700"
-        style={{ borderRadius: '0', marginRight: '10px' }}>
-          {walletKey !== "" ? walletKey : " Connect wallet"}
-          </button>
-
-        {renderForm("Mint Amount", mintingAmount, mintAmountChange, mintCoin)}
-
-        {renderForm("Stake Amount", stakingAmount, stakeAmountChange, stakeCoin)}
-
-        <div>
-          <div>
-          <button
-          onClick={withdrawCoin}
-          className="p-3 bg-violet-900 text-black transition duration-300 hover:ring-4 hover:ring-violet-700"
-          style={{ borderRadius: '0', marginTop: '10px' }}> 
-          {"Withdraw"}</button>
-          </div>
-        </div>
-      </div>
-    </main>
-  );
-}
-
-function renderForm(labelText, value, onChange, onClick) {
-  return (
+  const renderForm = (labelText, value, onChange, onClick) => (
     <div style={formContainerStyle}>
       <form>
         {/* <label>{labelText}</label><br /> Remove this line */}
@@ -145,32 +112,66 @@ function renderForm(labelText, value, onChange, onClick) {
       </button>
     </div>
   );
+
+  const mainStyle: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column' as 'column', // Explicitly define the type as 'column'
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: '100vh',
+    backgroundImage: `url('https://wallpapercave.com/wp/wp8865987.jpg')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  };
+
+  const containerStyle = {
+    border: '2px solid rgba(255, 255, 255, 0.2)',
+    backdropFilter: 'blur(20px)',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+    padding: '80px',
+    margin: '20px',
+    textAlign: 'center',
+    background: 'transparent',
+  };
+
+  const formContainerStyle = {
+    display: 'flex',
+    flexDirection: 'column' as 'column', // Explicitly define the type as 'column'
+    alignItems: 'center',
+    margin: '20px',
+  };
+
+  return (
+    <main style={mainStyle}>
+      <div style={containerStyle}>
+        <form>
+          <label> Contract Id: 0x63CdD3987B09917A140a8C4597029419f3Ff7Bc5</label><br />
+        </form>
+
+        <button
+          onClick={connectWallet}
+          className="p-3 bg-violet-900 text-black transition duration-300 hover:ring-4 hover:ring-violet-700"
+          style={{ borderRadius: '0', marginRight: '10px' }}
+        >
+          {walletKey !== "" ? walletKey : " Connect wallet"}
+        </button>
+
+        {renderForm("Mint Amount", mintingAmount, mintAmountChange, mintCoin)}
+
+        {renderForm("Stake Amount", stakingAmount, stakeAmountChange, stakeCoin)}
+
+        <div>
+          <div>
+            <button
+              onClick={withdrawCoin}
+              className="p-3 bg-violet-900 text-black transition duration-300 hover:ring-4 hover:ring-violet-700"
+              style={{ borderRadius: '0', marginTop: '10px' }}
+            > 
+              {"Withdraw"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
 }
-
-const mainStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  minHeight: '100vh',
-  backgroundImage: `url('https://wallpapercave.com/wp/wp8865987.jpg')`,
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-};
-
-const containerStyle = {
-  border: '2px solid rgba(255, 255, 255, 0.2)',
-  backdropFilter: 'blur(20px)',
-  boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
-  padding: '80px',
-  margin: '20px',
-  textAlign: 'center',
-  background: 'transparent',
-};
-
-const formContainerStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  margin: '20px',
-};
