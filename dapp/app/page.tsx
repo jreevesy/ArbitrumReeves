@@ -93,7 +93,6 @@ export default function Home() {
     return (
       <div style={formContainerStyle}>
         <form>
-          {/* <label>{labelText}</label><br /> Remove this line */}
         </form>
 
         <input
@@ -117,7 +116,7 @@ export default function Home() {
 
   const mainStyle: React.CSSProperties = {
     display: 'flex',
-    flexDirection: 'column' as 'column', // Explicitly define the type as 'column'
+    flexDirection: 'column' as 'column', 
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: '100vh',
@@ -132,7 +131,7 @@ export default function Home() {
     boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
     padding: '80px',
     margin: '20px',
-    textAlign: 'center' as 'center', // Explicitly define the type as 'center'
+    textAlign: 'center' as 'center', 
     background: 'transparent',
   };
 
