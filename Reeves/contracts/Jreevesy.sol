@@ -6,67 +6,51 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Jreevesy is ERC20, Ownable {
 
-    mapping(address => uint256) private _stakes;
-    mapping(address => uint256) private _lastStakeTimestamp;
-    uint256 private _rewardRate = 1;
-    uint256 private lockInPeriod = 60; //1 min
-
+    uint256 private lockInPeriod = 60; 
+    uint256 private _rewardRate = 2;
+    mapping(address => uint256) private instake;
+    mapping(address => uint256) private TimeofStake;
     constructor(address initialOwner) 
-        ERC20("Jreevesy", "JRTN") 
+        ERC20("Jreevesy", "JRY") 
         Ownable(initialOwner)
     {}
-
-    function mint(address to, uint256 amount) public {
-        uint256 adjustedAmount = amount * 1e18;
-        _mint(to, adjustedAmount);
+    function mint_JRY(address to, uint256 amount) public {
+        uint256 modifyAmount = amount * 1e18;
+        _mint(to, modifyAmount);
     }
-
-    function stake(uint256 amount) public {
-        uint256 adjustedAmount = amount * 1e18;
-
-        require(adjustedAmount > 0, "Cannot stake 0 tokens");
-        require(balanceOf(msg.sender) >= adjustedAmount, "Insufficient balance");
-
-        _stakes[msg.sender] += adjustedAmount;
-        _lastStakeTimestamp[msg.sender] = block.timestamp;
-        _transfer(msg.sender, address(this), adjustedAmount);
+    function stake_JRY(uint256 amount) public {
+        uint256 modifyAmount = amount * 1e18;
+        require(modifyAmount > 0, "Staking zero tokens is not allowed");
+        require(balanceOf(msg.sender) >= modifyAmount, "Inadequate funds");
+        instake[msg.sender] += modifyAmount;
+        TimeofStake[msg.sender] = block.timestamp;
+        _transfer(msg.sender, address(this), modifyAmount);
   }
-
     function getStake(address account) public view returns (uint256) {
-        uint256 stakedInWei = _stakes[account];
+        uint256 stakedInWei = instake[account];
         uint256 stakedInEth = stakedInWei / 1e18;
         return stakedInEth;
   }
-
-    function withdraw() public {
-        require(block.timestamp > (_lastStakeTimestamp[msg.sender] + lockInPeriod), "You cannot withdraw funds, you are still in the lock in period");
-        require(_stakes[msg.sender] > 0, "No staked tokens");
-
-        uint256 stakedAmount = _stakes[msg.sender];
-        uint256 reward = ((block.timestamp - _lastStakeTimestamp[msg.sender]) * _rewardRate) * 1e18;
-
-        _stakes[msg.sender] = 0;
+    function withdraw__JRY() public {
+        require(block.timestamp > (TimeofStake[msg.sender] + lockInPeriod), "Withdrawal of funds is not permitted at the moment as you remain within the lock-in period");
+        require(instake[msg.sender] > 0, "No tokens have been staked");
+        uint256 stakedAmount = instake[msg.sender];
+        uint256 reward = ((block.timestamp - TimeofStake[msg.sender]) * _rewardRate) * 1e18;
+        instake[msg.sender] = 0;
         _transfer(address(this), msg.sender, stakedAmount);
         _mint(msg.sender, reward);
   }
-
-    function getWithdraw(address account) public view returns (uint256) {
-        uint256 stakedAmount = _stakes[msg.sender] / 1e18;
-        uint256 reward = ((block.timestamp - _lastStakeTimestamp[account]) * _rewardRate);
-
+    function toWithdraw(address account) public view returns (uint256) {
+        uint256 stakedAmount = instake[msg.sender] / 1e18;
+        uint256 reward = ((block.timestamp - TimeofStake[account]) * _rewardRate);
         uint256 total = reward + stakedAmount; 
         return total;
   }
-
-     function getElapsedStakeTime(address account) public view returns (uint256) {
-        uint256 time = (block.timestamp - _lastStakeTimestamp[account]);
+     function getStakeElapsed(address account) public view returns (uint256) {
+        uint256 time = (block.timestamp - TimeofStake[account]);
         return time;
   } 
-
-    function getLastStakeTimestamp(address account) public view returns (uint256) {
-        return _lastStakeTimestamp[account];
-  }
-
-
-    
+    function getTimeofStake(address account) public view returns (uint256) {
+        return TimeofStake[account];
+  }  
 }
